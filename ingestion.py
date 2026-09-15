@@ -34,8 +34,9 @@ for turbine_group in turbine_group_list:
         .option("mode", "PERMISSIVE")
         .csv(csv_path)
     )
-    df = df.withColumn("record_load_timestamp", lit(current_timestamp()))
+    df = df.withColumn("record_load_timestamp", current_timestamp())
 
+    table_name = f"bronze_turbine_output_{turbine_group.split('.')[0]}"
 
-    df.write.mode("overwrite").format("delta").saveAsTable(f"bronze_turbine_output_{turbine_group.split('.')[0]}")
+    # df.write.mode("append").format("delta").saveAsTable(table_name)
     
